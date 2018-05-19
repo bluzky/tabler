@@ -1,3 +1,13 @@
+> I want to use webpack to build table for my project.
+> I add webpack 4 config so that it can build the assets, you can change or optimze it.
+
+- `yarn dev` : build dev
+- `yarn watch`: watch for change
+- `yarn build`: build release
+
+build path can be config in `webpack/manifest.js`
+
+
 # Tabler 
 [![Backers on Open Collective](https://opencollective.com/tabler/backers/badge.svg)](#backers)
  [![Sponsors on Open Collective](https://opencollective.com/tabler/sponsors/badge.svg)](#sponsors) 
