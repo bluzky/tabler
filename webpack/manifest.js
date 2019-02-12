@@ -40,11 +40,7 @@ const paths = {
 	src: dir('../src/assets'),
 	build: dir('../build/assets'),
 	public_path: '/assets/',
-	js_source_dir: 'js',
-	style_source_dir: 'scss',
-	static_source_dir: '',
-	source_font_dir: 'fonts',
-	source_image_dir: 'images'
+	js_source_dir: 'js'
 }
 
 // -------------------
@@ -52,7 +48,8 @@ const paths = {
 // -------------------
 
 const outputFiles = {
-	bundle: 'js/[name].js'
+	bundle: 'js/[name].js',
+  css: 'css/vendor.css'
 }
 
 // --------------------

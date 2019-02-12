@@ -16,8 +16,8 @@
 // ---------------------
 
 const
-manifest          = require('../manifest'),
-MiniCssExtractPlugin = require("mini-css-extract-plugin");
+  manifest          = require('../manifest'),
+  MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 
 // ---------------
@@ -27,6 +27,10 @@ MiniCssExtractPlugin = require("mini-css-extract-plugin");
 let rule = {};
 
 const loaders = [
+ {
+        loader: MiniCssExtractPlugin.loader,
+        options: {}
+   },
   {
     loader: 'css-loader',
     options: {
@@ -44,7 +48,7 @@ const loaders = [
 if (manifest.IS_PRODUCTION) {
   rule = {
     test: /\.css$/,
-    loader: [MiniCssExtractPlugin.loader, ...loaders]
+    loader: loaders,
   };
 }
 

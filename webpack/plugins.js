@@ -1,55 +1,88 @@
-const manifest = require('./manifest'),
-	CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin'),
-	CopyWebpackPlugin = require('copy-webpack-plugin'),
-	path = require('path'),
-	MiniCssExtractPlugin = require('mini-css-extract-plugin'),
-	ImageminPlugin = require('imagemin-webpack-plugin').default,
-	webpack = require('webpack')
+const manifest = require("./manifest");
 
-const plugins = []
+const plugins = [];
+
+// html plugin 
+// const htmlPlugin = new HtmlWebpackPlugin({  // Also generate a test.html
+//   filename: 'index.html',
+//   template: 'index.html'
+// })
+
+// plugins.push(htmlPlugin);
+
+
+// extract plugin 
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+
+const extractPlugin = 
+  new MiniCssExtractPlugin({
+    filename: manifest.outputFiles.css,
+    //filename: "[name].css",
+    allChunks: true,
+  });
+
+plugins.push(extractPlugin);
+
+// copy plugin
+const path = require('path'),
+      CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const copyPlugin = new CopyWebpackPlugin([
+  {
+    from: path.join(manifest.paths.src, 'fonts'),
+    to: path.join(manifest.paths.build, 'fonts')
+  },
+  {
+    from: path.join(manifest.paths.src, 'images'),
+    to: path.join(manifest.paths.build, 'images')
+  }
+]);
+
+
+plugins.push(copyPlugin);
+
+// internal plugins
+
+const webpack = require("webpack");
+
+// ---------------
+// @Common Plugins
+// ---------------
+
 
 plugins.push(
-	new CaseSensitivePathsPlugin(),
-	new CopyWebpackPlugin([
-		{
-			from: path.join(manifest.paths.src, manifest.paths.source_font_dir),
-			to: path.join(manifest.paths.build, 'fonts')
-		},
-		{
-			from: path.join(
-				manifest.paths.src,
-				manifest.paths.source_image_dir
-			),
-			to: path.join(manifest.paths.build, 'images')
-		}
-	]),
-	new MiniCssExtractPlugin({
-		filename: 'css/[name].css',
-		chunkFilename: 'css/[id].css'
-	}),
-	new ImageminPlugin({
-		disable: manifest.IS_DEVELOPMENT
-	}),
-	new webpack.DefinePlugin({
-		'process.env': {
-			NODE_ENV: JSON.stringify(manifest.NODE_ENV)
-		}
-	}),
+  new webpack.DefinePlugin({
+    "process.env": {
+      NODE_ENV: JSON.stringify(manifest.NODE_ENV)
+    }
+  }),
 
-	new webpack.ProvidePlugin({
-		$: 'jquery',
-		jQuery: 'jquery',
-		'window.jQuery': 'jquery',
-		Popper: ['popper.js', 'default']
-	})
-)
+  new webpack.ProvidePlugin({
+    $: "jquery",
+    jQuery: "jquery",
+    "window.jQuery": "jquery",
+    Popper: ["popper.js", "default"],
+    global: 'window'
+  }),
+  new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/)
+);
 
+
+
+// ----------------------------
+// @Merging Development Plugins
+// ----------------------------
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 if (manifest.IS_DEVELOPMENT) {
-	plugins.push(
-		new webpack.NoEmitOnErrorsPlugin(),
-		new webpack.NamedModulesPlugin(),
-		new webpack.HotModuleReplacementPlugin()
-	)
+  // plugins.push(
+    // new BundleAnalyzerPlugin()
+    // new webpack.NoEmitOnErrorsPlugin(),
+    // new webpack.NamedModulesPlugin(),
+    // new webpack.HotModuleReplacementPlugin()
+  // );
 }
 
-module.exports = plugins
+
+
+
+module.exports = plugins;
