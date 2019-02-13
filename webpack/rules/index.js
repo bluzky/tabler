@@ -50,7 +50,7 @@ module.exports = [
     test: /\.(png|gif|jpg|svg)$/i,
     use: [
       {
-        loader: 'url-loader?limit=20000',
+        loader: 'file-loader?limit=2000',
         options: {
           outputPath: 'images'
         }
@@ -62,10 +62,10 @@ module.exports = [
 
   // fonts
   {
-    test: /\.(eot|svg|ttf|woff|woff2)$/,
+    test: /\.(eot|ttf|woff|woff2)$/,
     //  exclude: /(node_modules)/,
     use: {
-      loader: 'url-loader?limit=100000',
+      loader: 'file-loader?limit=30000',
       options: {
         outputPath: 'fonts'
       }

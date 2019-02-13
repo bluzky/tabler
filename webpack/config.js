@@ -16,7 +16,8 @@
 const path = require('path'),
 	manifest = require('./manifest'),
 	rules = require('./rules'),
-	plugins = require('./plugins')
+	    plugins = require('./plugins'),
+      UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 // ------------------
 // @Entry Point Setup
@@ -97,6 +98,18 @@ if (manifest.IS_PRODUCTION) {
   optimization.minimize = false;
 }
 
+
+
+// -----------------
+// @Dev server setting
+// -----------------
+
+var devServer =  {
+  contentBase: path.join(__dirname, '../build'),
+  compress: true,
+  port: 8000
+}
+
 // -----------------
 // @Exporting Module
 // -----------------
@@ -118,5 +131,6 @@ module.exports = {
     'window': 'window'
   },
 	plugins,
-	optimization
+	optimization,
+  devServer
 }

@@ -74,12 +74,12 @@ plugins.push(
 // ----------------------------
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 if (manifest.IS_DEVELOPMENT) {
-  // plugins.push(
-    // new BundleAnalyzerPlugin()
+  plugins.push(
+    new BundleAnalyzerPlugin()
     // new webpack.NoEmitOnErrorsPlugin(),
     // new webpack.NamedModulesPlugin(),
     // new webpack.HotModuleReplacementPlugin()
-  // );
+  );
 }
 
 

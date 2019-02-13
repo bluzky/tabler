@@ -57,7 +57,6 @@ const outputFiles = {
 // --------------------
 
 const entries = {
-	core: 'core.js',
 	dashboard: 'dashboard.js'
 }
 
